@@ -18,22 +18,22 @@ class Book {
 
   // Setters with validation
   set title(value) {
-    if (typeof value !== "string" || value.trim() === "") {
-      throw new Error("Book.title must be a non-empty string");
+    if (typeof value !== 'string' || value.trim() === '') {
+      throw new Error('Book.title must be a non-empty string');
     }
     this._title = value.trim();
   }
 
   set author(value) {
-    if (typeof value !== "string" || value.trim() === "") {
-      throw new Error("Book.author must be a non-empty string");
+    if (typeof value !== 'string' || value.trim() === '') {
+      throw new Error('Book.author must be a non-empty string');
     }
     this._author = value.trim();
   }
 
   set year(value) {
-    if (typeof value !== "number" || !Number.isInteger(value)) {
-      throw new Error("Book.year must be an integer number");
+    if (typeof value !== 'number' || !Number.isInteger(value)) {
+      throw new Error('Book.year must be an integer number');
     }
     const currentYear = new Date().getFullYear();
     if (value < 0 || value > currentYear) {
@@ -48,7 +48,7 @@ class Book {
 
   static findOldest(books) {
     if (!Array.isArray(books) || books.length === 0) {
-      throw new Error("Book.findOldest expects a non-empty array of books");
+      throw new Error('Book.findOldest expects a non-empty array of books');
     }
     return books.reduce((oldest, b) => (b.year < oldest.year ? b : oldest), books[0]);
   }

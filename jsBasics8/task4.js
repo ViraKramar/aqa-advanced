@@ -1,9 +1,9 @@
 class ApiService {
   getTodo() {
-    return fetch("https://jsonplaceholder.typicode.com/todos/1").then((r) => r.json());
+    return fetch('https://jsonplaceholder.typicode.com/todos/1').then((r) => r.json());
   }
   getUser() {
-    return fetch("https://jsonplaceholder.typicode.com/users/1").then((r) => r.json());
+    return fetch('https://jsonplaceholder.typicode.com/users/1').then((r) => r.json());
   }
 }
 
@@ -24,5 +24,5 @@ class PromiseService {
 const api = new ApiService();
 const service = new PromiseService(api);
 
-service.getAll().then(([todo, user]) => console.log("all:", todo, user));
-service.getFirst().then((first) => console.log("first:", first));
+service.getAll().then(([todo, user]) => console.log('all:', todo, user));
+service.getFirst().then((first) => console.log('first:', first));
