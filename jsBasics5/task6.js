@@ -3,5 +3,5 @@ const sortedList = [...numbersList];
 
 sortedList.sort((a, b) => a - b);
 
-console.log("Original:", numbersList);
-console.log("Sorted:", sortedList);
+console.log('Original:', numbersList);
+console.log('Sorted:', sortedList);
