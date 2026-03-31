@@ -4,4 +4,4 @@ function printLater(text, ms) {
   }, ms);
 }
 
-printLater("Hello after 1000ms", 1000);
+printLater('Hello after 1000ms', 1000);
