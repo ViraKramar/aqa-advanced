@@ -1,32 +1,16 @@
-import axios from 'axios';
 import { describe, it, expect } from 'vitest';
+import { TodosController } from '../src/controllers/todosController.js';
+import { UsersController } from '../src/controllers/usersController.js';
+import { PostsController } from '../src/controllers/postsController.js';
+import { postPayload, commentPayload } from '../src/testData/payloads.js';
 
-const api = axios.create({
-  baseURL: 'https://jsonplaceholder.typicode.com',
-  timeout: 10000,
-});
-
-api.interceptors.request.use((config) => {
-  console.log(`[REQUEST] ${config.method?.toUpperCase()} ${config.baseURL}${config.url}`);
-  return config;
-});
-
-api.interceptors.response.use(
-  (response) => {
-    console.log(`[RESPONSE] ${response.status} ${response.config.url}`);
-    return response;
-  },
-  (error) => {
-    console.log(
-      `[RESPONSE ERROR] ${error?.response?.status ?? 'NO_STATUS'} ${error?.config?.url ?? 'NO_URL'}`
-    );
-    throw error;
-  }
-);
+const todosController = new TodosController();
+const usersController = new UsersController();
+const postsController = new PostsController();
 
 describe('JSONPlaceholder API', () => {
   it('GET /todos/1 returns valid todo', async () => {
-    const res = await api.get('/todos/1');
+    const res = await todosController.getTodoById(1);
 
     expect(res.status).toBe(200);
     expect(res.data).toMatchObject({
@@ -38,7 +22,7 @@ describe('JSONPlaceholder API', () => {
   });
 
   it('GET /users/1 returns valid user', async () => {
-    const res = await api.get('/users/1');
+    const res = await usersController.getUserById(1);
 
     expect(res.status).toBe(200);
     expect(res.data).toMatchObject({
@@ -50,7 +34,7 @@ describe('JSONPlaceholder API', () => {
   });
 
   it('GET /posts?userId=1 returns posts array', async () => {
-    const res = await api.get('/posts', { params: { userId: 1 } });
+    const res = await postsController.getPostsByUserId(1);
 
     expect(res.status).toBe(200);
     expect(Array.isArray(res.data)).toBe(true);
@@ -65,25 +49,21 @@ describe('JSONPlaceholder API', () => {
   });
 
   it('POST /posts returns created post', async () => {
-    const payload = { title: 'hello', body: 'test body', userId: 1 };
-
-    const res = await api.post('/posts', payload);
+    const res = await postsController.createPost(postPayload);
 
     expect(res.status).toBe(201);
     expect(res.data).toMatchObject({
-      ...payload,
+      ...postPayload,
       id: expect.any(Number),
     });
   });
 
   it('POST /comments returns created comment', async () => {
-    const payload = { postId: 1, name: 'Vira', email: 'vira@example.com', body: 'comment body' };
-
-    const res = await api.post('/comments', payload);
+    const res = await postsController.createComment(commentPayload);
 
     expect(res.status).toBe(201);
     expect(res.data).toMatchObject({
-      ...payload,
+      ...commentPayload,
       id: expect.any(Number),
     });
   });
